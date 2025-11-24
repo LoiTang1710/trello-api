@@ -1,15 +1,9 @@
-// heobovidai
-// br2IbjFDhvI53qU5
-const MONGODB_URI =
-  'mongodb+srv://heobovidai:br2IbjFDhvI53qU5@cluster0.nvzxs73.mongodb.net/?appName=Cluster0'
-const DATABASE_NAME = 'trello-database'
-
+import { env } from '@/config/environment'
 import { MongoClient, ServerApiVersion } from 'mongodb'
-
 let trelloDatabaseInstance = null
 
 //khoi tao doi tuong connect toi mongodb
-const mongoClientInstance = new MongoClient(MONGODB_URI, {
+const mongoClientInstance = new MongoClient(env.MONGODB_URI, {
   serverApi: {
     version: ServerApiVersion.v1,
     strict: true,
@@ -22,10 +16,16 @@ export const CONNECT_DB = async () => {
   await mongoClientInstance.connect()
 
   // connect thanh cong thi lay database va gan nguoc laij vao trelloDatabaseInstance
-  trelloDatabaseInstance = mongoClientInstance.db(DATABASE_NAME)
+  trelloDatabaseInstance = mongoClientInstance.db(env.DATABASE_NAME)
 }
 
 export const GET_DB = () => {
   if (!trelloDatabaseInstance) throw new Error('Must connect to Database first')
   return trelloDatabaseInstance
+}
+
+// Dong connection cua DB khi can
+export const CLOSE_DB = async () => {
+  console.log('3. Server is shutting down...')
+  await mongoClientInstance.close()
 }

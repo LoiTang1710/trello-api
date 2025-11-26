@@ -1,6 +1,6 @@
 import Joi from 'joi'
 import { StatusCodes } from 'http-status-codes'
-import { json } from 'express'
+
 
 const createNew = async (req, res, next) => {
   /**
@@ -30,7 +30,8 @@ const createNew = async (req, res, next) => {
     console.log('request body: ', req.body)
     // abortEarly cho trưởng hợp nhiều errors thì trả về tất cà thay vì 1
     await correctCondition.validateAsync(req.body, { abortEarly: false })
-    // next()
+    // Validate dữ liệu done thì continue request tới controllers
+    next()
     res
       .status(StatusCodes.CREATED)
       .json({ message: 'POST from Validation: Apis create lists board...' })

@@ -32,9 +32,9 @@ const createNew = async (req, res, next) => {
     await correctCondition.validateAsync(req.body, { abortEarly: false })
     // Validate dữ liệu done thì continue request tới controllers
     next()
-    res
-      .status(StatusCodes.CREATED)
-      .json({ message: 'POST from Validation: Apis create lists board...' })
+    // res
+    //   .status(StatusCodes.CREATED)
+    //   .json(ApiError)
   } catch (error) {
     // const errorMessage = new Error(error).message
     // const customMessages = new ApiError(
